@@ -60,7 +60,7 @@ def select_file(path):
 
 #Crear un archivo que MiniZinc pueda leer, a partir de los datos de entrada
 def create_file(clients, places, costs, capacities, demands, benefits):
-    with open("PUICAData.dzn", "w") as file:
+    with open("DatosPUICA.dzn", "w") as file:
         file.write(f"N = {clients};\n")
         file.write(f"M = {places};\n")
         file.write(f"F = [{costs}];\n")
@@ -83,7 +83,7 @@ def execute_model():
 
     try:
         model = Model("PUICA.mzn")
-        model.add_file("PUICAData.dzn")
+        model.add_file("DatosPUICA.dzn")
         solver = Solver.lookup("cbc")
         instance = Instance(solver, model)
         start = datetime.datetime.now()
@@ -93,9 +93,12 @@ def execute_model():
         if result:
             profit = result.objective
             cal_products = result["R"]
+            cal_locals = result["A"]
             text_output.insert(tk.END, f"Solución encontrada en {end-start} segundos\n\n")
             text_output.insert(tk.END, f"Beneficio total: {profit}\n\n")
-            text_output.insert(tk.END, f"Productos a enviar:\n\n")
+            text_output.insert(tk.END, f"Centros a abrir (A):\n")
+            text_output.insert(tk.END, f"{cal_locals}\n\n")
+            text_output.insert(tk.END, f"Productos a enviar (R):\n")
             for i in range(len(cal_products)):
                 text_output.insert(tk.END, f"Cliente {i+1}: {cal_products[i]}\n")
             text_output.insert(tk.END, f"\n")
