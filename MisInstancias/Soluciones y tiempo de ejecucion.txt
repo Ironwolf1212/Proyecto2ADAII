@@ -1,0 +1,6 @@
+# Prueba |  Valor solución  |  Tiempo de ejecución
+    1           137.77              302 msec
+    2           208.29              242 msec
+    3	   65.81999999999999        257 msec
+    4           143.77              245 msec
+    5           105.33              244 msec

@@ -41,5 +41,34 @@ var float: total_benefit = sum(j in 1..N, i in 1..M) (R[j, i] * B[j, i]) - sum(i
 
 solve maximize total_benefit;
 
+% Restricciones Extra - Mejoran la eficiencia de Gecode, pero inutilizan Coin-BC
+%constraint
+%    Restringir la apertura de instalaciones a las que pueden satisfacer la demanda de al menos un cliente
+%    forall(i in 1..M) (
+%       A[i] <= sum(j in 1..N) (D[j] <= C[i])
+%   );
+
+%constraint
+%    Restringir la apertura de instalaciones a las que pueden generar beneficio
+%    forall(j in 1..M) (
+%        A[i] <= sum(j ion 1..N) (B[j, i] > 0)
+%   );
+
+% Restricciones para romper la simetría
+
+%constraint 
+%    Restringir el orden de apertura de las instalaciones
+%    forall(i in 1..M-1) (
+%        A[i] >= A[i+1]
+%    );
+
+%constraint
+%    Restringir el orden de asignación de productos a los clientes
+%    forall(j in 1..N-1) (
+%       forall(i in 1..M) (
+%           R[j, i] >= R[j+1, i]
+%       )
+%   );
+
 % Salida
 output ["R = ", show(R), "\n", "A = ", show(A), "\n", "Total Benefit = ", show(total_benefit)];
