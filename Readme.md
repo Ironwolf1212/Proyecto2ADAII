@@ -42,11 +42,11 @@ python3 -m venv .venv
 
 ##### En Windows
 ```
-pip install -r requirements.txt
+pip install -r PUICAGUIFuentes/requirements.txt
 ```
 ##### En Linux
 ```
-pip3 install -r requirements.txt
+pip3 install -r PUICAGUIFuentes/requirements.txt
 ```
 
 ### Ejecución del programa
